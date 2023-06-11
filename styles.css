@@ -1,0 +1,40 @@
+/* CSS Styles */
+/* Reset default styles */
+body, h1, h2, p, button {
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Main content styles */
+main {
+  padding: 20px;
+}
+
+.content {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Button styles */
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Footer styles */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
