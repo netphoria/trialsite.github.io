@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Unlock Site</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"></script>
+  <script src="script.js"></script>
 </head>
 <body>
   <header>
@@ -15,14 +17,13 @@
     <section class="content">
       <h2>Welcome to the Locked Content</h2>
       <p>This is the locked content of the site.</p>
-      <button id="checkoutButton">Unlock Now</button>
+      <button id="addCartButton">Add to Cart</button>
+      <div id="paypalCartContainer"></div>
     </section>
   </main>
 
   <footer>
     <p>&copy; 2023 My Website. All rights reserved.</p>
   </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>
