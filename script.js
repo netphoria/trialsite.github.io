@@ -1,83 +1,43 @@
 // JavaScript Code
-var cartItems = []; // Array to store cart items
+// Add event listeners to the login and registration forms
+document.getElementById("loginForm").addEventListener("submit", login);
+document.getElementById("registrationForm").addEventListener("submit", register);
 
-// Function to add an item to the cart
-function addItemToCart() {
-  var item = {
-    name: "Trial 01",
-    quantity: 1,
-    unit_amount: {
-      currency_code: "USD",
-      value: 10.0
-    }
-  };
+// Login function
+function login(e) {
+  e.preventDefault();
+  // Retrieve entered email and password
+  var email = document.getElementById("emailInput").value;
+  var password = document.getElementById("passwordInput").value;
 
-  // Add item to cart
-  cartItems.push(item);
-
-  // Render cart summary
-  renderCartSummary();
-
-  // Render PayPal cart buttons
-  renderPayPalButtons();
+  // Validate login credentials (e.g., check against database or API)
+  // If credentials are valid, unlock content and display content section
+  // If credentials are invalid, show an error message
 }
 
-// Function to render the cart summary
-function renderCartSummary() {
-  var cartSummaryHTML = "<h3>Cart Summary</h3>";
-  var totalAmount = 0;
+// Registration function
+function register(e) {
+  e.preventDefault();
+  // Retrieve entered email and password
+  var email = document.getElementById("emailInput").value;
+  var password = document.getElementById("passwordInput").value;
+  var confirmPassword = document.getElementById("confirmPasswordInput").value;
 
-  for (var i = 0; i < cartItems.length; i++) {
-    var item = cartItems[i];
-    var itemTotal = item.quantity * item.unit_amount.value;
-    totalAmount += itemTotal;
+  // Validate registration inputs (e.g., check for password match, valid email format)
+  // If inputs are valid, proceed with registration and unlock content
+  // If inputs are invalid, show an error message
+}
 
-    cartSummaryHTML += "<p>" + item.name + " - Quantity: " + item.quantity + " - Total: $" + itemTotal.toFixed(2) + "</p>";
+// PayPal payment processing
+paypal.Buttons({
+  createSubscription: function(data, actions) {
+    return actions.subscription.create({
+      plan_id: 'YOUR_PLAN_ID' // Replace with your PayPal plan ID
+    });
+  },
+  onApprove: function(data, actions) {
+    // Payment successful, unlock the content
+    document.getElementById("paymentSection").style.display = "none";
+    document.getElementById("contentSection").style.display = "block";
   }
-
-  cartSummaryHTML += "<p>Total Amount: $" + totalAmount.toFixed(2) + "</p>";
-
-  document.getElementById("cartSummary").innerHTML = cartSummaryHTML;
-}
-
-// Function to render PayPal cart buttons
-function renderPayPalButtons() {
-  paypal.Buttons({
-    createOrder: function(data, actions) {
-      return actions.order.create({
-        purchase_units: [
-          {
-            amount: {
-              currency_code: "USD",
-              value: getTotalCartAmount()
-            },
-            items: cartItems
-          }
-        ]
-      });
-    },
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        // Payment successful, unlock the content by removing the add to cart button
-        document.getElementById("addCartButton").remove();
-        document.getElementById("paypalCartContainer").innerHTML =
-          "<p>Payment successful!</p>";
-      });
-    }
-  }).render("#paypalCartContainer");
-}
-
-// Function to calculate the total cart amount
-function getTotalCartAmount() {
-  var total = 0;
-  for (var i = 0; i < cartItems.length; i++) {
-    total += cartItems[i].unit_amount.value * cartItems[i].quantity;
-  }
-  return total.toFixed(2);
-}
-
-// Get the add to cart button element
-var addCartButton = document.getElementById("addCartButton");
-
-// Attach a click event listener to the add to cart button
-addCartButton.addEventListener("click", addItemToCart);
+}).render("#paymentButton");
